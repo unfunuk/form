@@ -1,83 +1,54 @@
-import { Component } from '@angular/core';
-import {AbstractControl, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators} from "@angular/forms";
+import { Component } from '@angular/core'
+import {
+  AbstractControl,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  ValidatorFn,
+  Validators,
+} from '@angular/forms'
+import { InputErrors } from './input/input.component'
+import { DatePickerErrors } from './date-picker/date-picker.component'
 
 @Component({
   selector: 'app-form',
   templateUrl: './form.component.html',
-  styleUrls: ['./form.component.scss']
+  styleUrls: ['./form.component.scss'],
 })
-export class FormComponent{
-  today = new Date();
-  maxDob: Date = new Date(
-    this.today.getFullYear() - 18,
-    this.today.getMonth(),
-    this.today.getDate()
-  );
-  isHourOpen:boolean=false;
-  isMinuteOpen:boolean=false;
-  hourValue: number | undefined;
-  minuteValue: number | undefined;
-  minutesArray:number[]=[];
-  hoursArray:number[]=[...Array(24).keys()];
-
-  form: FormGroup= this.formBuilder.group({
-    firstName: new FormControl('',[Validators.required,this.ValidatorForName()]),
-    lastName: new FormControl('', [Validators.required,this.ValidatorForName()]),
-    dateOfBirth: new FormControl('',[Validators.required]),
-    time:new FormControl('')
-  });
-  constructor( private formBuilder: FormBuilder) {
-    for(let i=0;i<12;i++){
-      this.minutesArray.push(5*i)
-    }
-  }
-  ValidatorForName():ValidatorFn{
-    return (
-      control: AbstractControl
-    ): { [key: string]: boolean } | null => {
-      let accountRgEx: RegExp = /^[^0-9!?.|,@#$%^*]+$/
-      let valid =
-        !control.value || accountRgEx.test(control.value)
-      return valid ? null : { wrongName: true }
-    }
-  }
-
-  formSubmit(){
+export class FormComponent {
+  form: FormGroup = this.formBuilder.group({
+    firstName: new FormControl('', [Validators.required]),
+    lastName: new FormControl('', [Validators.required]),
+    dateOfBirth: new FormControl('', [Validators.required]),
+    time: new FormControl(''),
+  })
+  constructor(private formBuilder: FormBuilder) {}
+  formSubmit() {
     console.log(this.form.value)
     console.log(this.form.valid)
   }
-  iconClick(event:any){
-    event.stopPropagation();
-    if(this.isMinuteOpen){
-      this.isMinuteOpen=false;
-    }else{
-      this.isHourOpen? this.isHourOpen=false : this.isHourOpen=true;
+  errorsForFirstName(): InputErrors {
+    return { required: 'Required field', wrongName: 'Wrong first name' }
+  }
+  errorsForLastName(): InputErrors {
+    return { required: 'Required field', wrongName: 'Wrong last name' }
+  }
+  errorsForDateOfBirth(): DatePickerErrors {
+    return {
+      required: 'Required field',
+      matDatepickerMax: 'Only for those over 18 years',
     }
-    this.minuteValue=undefined;
-    this.hourValue=undefined;
   }
-  hourClick(event:any){
-    this.isHourOpen=false;
-    this.hourValue=event.target.id;
-    this.isMinuteOpen=true;
+  getFirstName(): AbstractControl {
+    return <AbstractControl>this.form.get('firstName')
   }
-  minuteClick(event:any){
-    this.minuteValue=event.target.id;
-    this.form.patchValue({time:`${this.hourValue}:${this.minuteValue}`})
-    this.isMinuteOpen=false;
+  getLastName(): AbstractControl {
+    return <AbstractControl>this.form.get('lastName')
   }
-  outsideClick(event:any){
-    console.log('a')
-    if(event.target.id!=="time"){
-      if(this.isHourOpen) {
-        this.isHourOpen = false
-      }
-      if(this.isMinuteOpen){
-        this.isMinuteOpen=false;
-      }
-    }
-    this.minuteValue=undefined;
-    this.hourValue=undefined;
+  getDateOfBirth(): AbstractControl {
+    return <AbstractControl>this.form.get('dateOfBirth')
   }
-
+  getTime(): AbstractControl {
+    return <AbstractControl>this.form.get('time')
+  }
 }

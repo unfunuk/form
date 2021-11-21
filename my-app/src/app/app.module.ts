@@ -1,27 +1,26 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core'
+import { BrowserModule } from '@angular/platform-browser'
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ReactiveFormsModule} from "@angular/forms";
-import { FormComponent } from './form/form.component';
-import {MatInputModule} from "@angular/material/input";
-import {MatCardModule} from "@angular/material/card";
-import {MatButtonModule} from "@angular/material/button";
-import {MatDatepickerModule} from "@angular/material/datepicker";
-import {MatNativeDateModule} from "@angular/material/core";
-import {OverlayModule} from "@angular/cdk/overlay";
-import {MatIconModule} from "@angular/material/icon";
+import { AppRoutingModule } from './app-routing.module'
+import { AppComponent } from './app.component'
+import { FormModule } from './form/form.module'
+import { FormComponent } from './form/form.component'
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
+import { ReactiveFormsModule } from '@angular/forms'
+import { MatInputModule } from '@angular/material/input'
+import { MatCardModule } from '@angular/material/card'
+import { MatButtonModule } from '@angular/material/button'
+import { MatDatepickerModule } from '@angular/material/datepicker'
+import { MatNativeDateModule } from '@angular/material/core'
+import { OverlayModule } from '@angular/cdk/overlay'
+import { MatIconModule } from '@angular/material/icon'
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    FormComponent,
-  ],
+  declarations: [AppComponent, FormComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    FormModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
     MatInputModule,
@@ -30,9 +29,9 @@ import {MatIconModule} from "@angular/material/icon";
     MatDatepickerModule,
     MatNativeDateModule,
     OverlayModule,
-    MatIconModule
+    MatIconModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

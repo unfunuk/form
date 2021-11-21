@@ -1,44 +1,9 @@
-.mat-card{
+.mat-card {
   max-width: 400px;
   margin: auto;
-  .mat-card-content{
-    display:flex;
+  .mat-card-content {
+    display: flex;
     flex-direction: column;
     align-items: center;
   }
 }
-
-mat-form-field.mat-form-field {
-  padding-top: 10px;
-  font-size: 20px;
-  width: 300px;
-}
-.mat-icon:hover{
-  cursor: pointer;
-}
-.time-list{
-  width: 296px;
-  display: grid;
-  grid-template-columns: repeat(4,1fr);
-  box-shadow: 0px 2px 4px -1px rgb(0 0 0 / 20%), 0px 4px 5px 0px rgb(0 0 0 / 14%), 0px 1px 10px 0px rgb(0 0 0 / 12%);
-  background-color: #fff;
-  color: rgba(0,0,0,.87);
-  list-style: none;
-  box-sizing: border-box;
-  margin: 0px;
-  padding: 25px;
-  grid-gap:10px;
-  .time-element{
-    color:black;
-    font-size:16px;
-    text-align: center;
-    border-radius: 20px;
-    height: 25px;
-    padding-top: 5px;
-    &:hover{
-      cursor:pointer;
-      background:darkgray;
-    }
-  }
-}
-

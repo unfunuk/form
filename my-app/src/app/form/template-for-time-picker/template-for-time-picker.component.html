@@ -1,0 +1,21 @@
+<ng-template
+  cdkConnectedOverlay
+  [cdkConnectedOverlayOrigin]="originOverlay"
+  [cdkConnectedOverlayOpen]="cdkConnectedOverlayOpen"
+  [cdkConnectedOverlayOffsetY]="-27"
+  (overlayOutsideClick)="outsideClick($event)"
+>
+  <div class="template">
+    <div class="label">{{ label }}</div>
+    <ul class="time-list">
+      <li
+        *ngFor="let elem of elemArray"
+        (click)="elemClick(elem)"
+        class="time-element"
+        [class.active-item]="elem == currentValue"
+      >
+        {{ elem }}
+      </li>
+    </ul>
+  </div>
+</ng-template>

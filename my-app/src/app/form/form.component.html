@@ -3,70 +3,40 @@
     <h1>Form</h1>
     <form [formGroup]="form" (ngSubmit)="formSubmit()" novalidate>
       <div>
-        <mat-form-field appearance="fill">
-          <mat-label >First name</mat-label>
-          <input matInput formControlName="firstName" type="text">
-          <mat-error *ngIf="form.get('firstName')?.hasError('required')">
-            Required field
-          </mat-error>
-          <mat-error *ngIf="form.get('firstName')?.hasError('wrongName')">
-            Wrong first name
-          </mat-error>
-        </mat-form-field>
+        <app-input
+          label="First name"
+          controlName="firstName"
+          [formController]="getFirstName()"
+          [errors]="errorsForFirstName()"
+        ></app-input>
       </div>
       <div>
-        <mat-form-field appearance="fill">
-          <mat-label >Last name</mat-label>
-          <input matInput formControlName="lastName" type="text" />
-          <mat-error *ngIf="form.get('lastName')?.hasError('required')">
-            Required field
-          </mat-error>
-          <mat-error *ngIf="form.get('lastName')?.hasError('wrongName')">
-            Wrong last name
-          </mat-error>
-        </mat-form-field>
+        <app-input
+          label="Last name"
+          controlName="lastName"
+          [formController]="getLastName()"
+          [errors]="errorsForLastName()"
+        ></app-input>
       </div>
       <div>
-        <mat-form-field appearance="fill" cdkOverlayOrigin #originOverlay="cdkOverlayOrigin">
-          <mat-label>Choose a time</mat-label>
-          <input matInput formControlName="time" type="text" />
-          <mat-icon matSuffix (click)="iconClick($event)" id="time" [color]="isHourOpen?'primary':null">query_builder</mat-icon>
-        </mat-form-field>
-        <ng-template cdkConnectedOverlay [cdkConnectedOverlayOrigin]="originOverlay"
-                     [cdkConnectedOverlayOpen]="isHourOpen" [cdkConnectedOverlayOffsetY]="-27"
-                     (overlayOutsideClick)="outsideClick($event)">
-          <ul class="time-list">
-            <li *ngFor="let hour of hoursArray" (click)="hourClick($event)" class="time-element" [id]="hour">
-              {{hour}}
-            </li>
-          </ul>
-        </ng-template>
-        <ng-template cdkConnectedOverlay [cdkConnectedOverlayOrigin]="originOverlay"
-                     [cdkConnectedOverlayOpen]="isMinuteOpen" [cdkConnectedOverlayOffsetY]="-27"
-                     (overlayOutsideClick)="outsideClick($event)">
-          <ul class="time-list">
-            <li *ngFor="let minute of minutesArray" (click)="minuteClick($event)" class="time-element" [id]="minute">
-              {{minute}}
-            </li>
-          </ul>
-        </ng-template>
+        <app-time-picker
+          label="Choose the time"
+          controlName="time"
+          [formGroup]="form"
+        ></app-time-picker>
       </div>
       <div>
-        <mat-form-field appearance="fill">
-          <mat-label>Choose a date of birth</mat-label>
-          <input matInput formControlName="dateOfBirth" [matDatepicker]="picker" [max]="maxDob">
-          <mat-error *ngIf="form.get('dateOfBirth')?.hasError('required')">
-            Required field or wrong format of date
-          </mat-error>
-          <mat-error *ngIf="form.get('dateOfBirth')?.hasError('matDatepickerMax')">
-            Only for those over 18 years
-          </mat-error>
-          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-          <mat-datepicker #picker startView="multi-year"></mat-datepicker>
-        </mat-form-field>
+        <app-date-picker
+          controlName="dateOfBirth"
+          [errors]="errorsForDateOfBirth()"
+          [formController]="getDateOfBirth()"
+          label="Choose the date of birth"
+        ></app-date-picker>
       </div>
       <div>
-        <button mat-flat-button color="primary" [disabled]="form.invalid">Submit</button>
+        <button mat-flat-button color="primary" [disabled]="form.invalid">
+          Submit
+        </button>
       </div>
     </form>
   </mat-card-content>

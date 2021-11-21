@@ -1,0 +1,33 @@
+<mat-form-field
+  appearance="fill"
+  cdkOverlayOrigin
+  #originOverlay="cdkOverlayOrigin"
+>
+  <mat-label>{{ label }}</mat-label>
+  <input matInput [formControlName]="controlName" type="text" />
+  <mat-icon
+    matSuffix
+    (click)="iconClick($event)"
+    id="time"
+    [color]="isHourOpen || isMinuteOpen ? 'primary' : null"
+    >query_builder</mat-icon
+  >
+</mat-form-field>
+<app-template-for-time-picker
+  label="Choose hour"
+  (onElemClick)="hourClick($event)"
+  (onOutsideClick)="outsideClick($event)"
+  [originOverlay]="originOverlay"
+  [cdkConnectedOverlayOpen]="isHourOpen"
+  [elemArray]="hoursArray"
+  [currentValue]="hourValue"
+></app-template-for-time-picker>
+<app-template-for-time-picker
+  label="Choose minute"
+  (onElemClick)="minuteClick($event)"
+  (onOutsideClick)="outsideClick($event)"
+  [originOverlay]="originOverlay"
+  [cdkConnectedOverlayOpen]="isMinuteOpen"
+  [elemArray]="minutesArray"
+  [currentValue]="minuteValue"
+></app-template-for-time-picker>

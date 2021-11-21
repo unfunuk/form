@@ -1,0 +1,14 @@
+<mat-form-field appearance="fill">
+  <mat-label>{{ label }}</mat-label>
+  <input
+    matInput
+    [formControlName]="controlName"
+    [matDatepicker]="picker"
+    [max]="maxDob"
+  />
+  <mat-error *ngFor="let error of errors | keyvalue">
+    <p *ngIf="formController?.hasError(error.key)">{{ error.value }}</p>
+  </mat-error>
+  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+  <mat-datepicker #picker startView="multi-year"></mat-datepicker>
+</mat-form-field>
