@@ -1,15 +1,17 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core'
 import {
   AbstractControl,
   ControlContainer,
+  FormControl,
   FormGroup,
   FormGroupDirective,
   ValidatorFn,
-} from '@angular/forms';
+  Validators,
+} from '@angular/forms'
 
 export interface InputErrors {
-  required: string;
-  wrongName: string;
+  required: string
+  wrongFormat: string
 }
 @Component({
   selector: 'app-input',
@@ -20,20 +22,19 @@ export interface InputErrors {
   ],
 })
 export class InputComponent implements OnInit {
-  @Input() controlName: string = '';
-  @Input() label: string = '';
-  @Input() formController!: AbstractControl;
-  @Input() errors!: InputErrors;
-  constructor() {}
-  ngOnInit() {
-    this.formController?.addValidators([this.SpecialSymbolsValidator()]);
+  @Input() controlName: string = ''
+  @Input() label: string = ''
+  myForm: FormGroup
+  inputErrors: InputErrors = {
+    required: 'Required field',
+    wrongFormat: 'Wrong format',
   }
-
-  SpecialSymbolsValidator(): ValidatorFn {
-    return (control: AbstractControl): { [key: string]: boolean } | null => {
-      const accountRgEx: RegExp = /^[а-яА-Яa-zA-Z]+$/;
-      let valid = !control.value || accountRgEx.test(control.value);
-      return valid ? null : { wrongName: true };
-    };
+  constructor(private parent: FormGroupDirective) {}
+  ngOnInit() {
+    this.myForm = this.parent.form
+    this.parent.form.addControl(
+      this.controlName,
+      new FormControl('', [Validators.required])
+    )
   }
 }

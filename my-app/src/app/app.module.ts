@@ -7,29 +7,29 @@ import { FormModule } from './form/form.module'
 import { FormComponent } from './form/form.component'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { ReactiveFormsModule } from '@angular/forms'
-import { MatInputModule } from '@angular/material/input'
 import { MatCardModule } from '@angular/material/card'
 import { MatButtonModule } from '@angular/material/button'
-import { MatDatepickerModule } from '@angular/material/datepicker'
-import { MatNativeDateModule } from '@angular/material/core'
-import { OverlayModule } from '@angular/cdk/overlay'
-import { MatIconModule } from '@angular/material/icon'
+import { WeatherFormComponent } from './weather-form/weather-form.component'
+import { WeatherFormModule } from './weather-form/weather-form.module'
+import { AgmCoreModule } from '@agm/core'
+import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
 
 @NgModule({
-  declarations: [AppComponent, FormComponent],
+  declarations: [AppComponent, FormComponent, WeatherFormComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
-    MatInputModule,
     MatCardModule,
     MatButtonModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    OverlayModule,
-    MatIconModule,
+    WeatherFormModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyDqHQgfsx8vG0UINAUMtewU8cVlo-0A49c',
+      libraries: ['places'],
+    }),
+    GooglePlaceModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

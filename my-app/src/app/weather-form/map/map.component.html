@@ -1,0 +1,19 @@
+<!--<input
+  ngx-google-places-autocomplete
+  #placesRef="ngx-places"
+  (onAddressChange)="handleAddressChange($event)"
+/>-->
+<input matInput type="text" formControlName="search" />
+<button mat-flat-button color="primary" (click)="search()">Search</button>
+<agm-map
+  [latitude]="lat ? lat : latitude"
+  [longitude]="lng ? lng : longitude"
+  [zoom]="zoom"
+  (mapClick)="mapClick($event)"
+>
+  <agm-marker
+    [latitude]="lat ? lat : latitude"
+    [longitude]="lng ? lng : longitude"
+    *ngIf="locationChosen"
+  ></agm-marker>
+</agm-map>

@@ -6,8 +6,10 @@
     [matDatepicker]="picker"
     [max]="maxDob"
   />
-  <mat-error *ngFor="let error of errors | keyvalue">
-    <p *ngIf="formController?.hasError(error.key)">{{ error.value }}</p>
+  <mat-error *ngFor="let error of dateErrors | keyvalue">
+    <p *ngIf="myForm.get(controlName)?.hasError(error.key)">
+      {{ error.value }}
+    </p>
   </mat-error>
   <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
   <mat-datepicker #picker startView="multi-year"></mat-datepicker>

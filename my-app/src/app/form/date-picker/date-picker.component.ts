@@ -1,13 +1,16 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core'
 import {
   AbstractControl,
   ControlContainer,
+  FormControl,
+  FormGroup,
   FormGroupDirective,
-} from '@angular/forms';
+  Validators,
+} from '@angular/forms'
 
 export interface DatePickerErrors {
-  required: string;
-  matDatepickerMax: string;
+  required: string
+  matDatepickerMax: string
 }
 @Component({
   selector: 'app-date-picker',
@@ -17,17 +20,26 @@ export interface DatePickerErrors {
     { provide: ControlContainer, useExisting: FormGroupDirective },
   ],
 })
-export class DatePickerComponent {
-  @Input() controlName: string = '';
-  @Input() label: string = '';
-  @Input() formController!: AbstractControl;
-  @Input() errors!: DatePickerErrors;
-
-  today = new Date();
+export class DatePickerComponent implements OnInit {
+  @Input() controlName: string = ''
+  @Input() label: string = ''
+  myForm: FormGroup
+  today = new Date()
   maxDob: Date = new Date(
     this.today.getFullYear() - 18,
     this.today.getMonth(),
     this.today.getDate()
-  );
-  constructor() {}
+  )
+  dateErrors: DatePickerErrors = {
+    required: 'Required field',
+    matDatepickerMax: 'Only for those over 18 years',
+  }
+  constructor(private parent: FormGroupDirective) {}
+  ngOnInit() {
+    this.myForm = this.parent.form
+    this.parent.form.addControl(
+      this.controlName,
+      new FormControl('', Validators.required)
+    )
+  }
 }

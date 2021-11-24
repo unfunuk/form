@@ -1,0 +1,10 @@
+<form class="form" [formGroup]="formGroup">
+  <app-map
+    [lat]="lat"
+    [lng]="lng"
+    (onMapClick)="mapClick($event)"
+    (onSearch)="search($event)"
+  ></app-map>
+
+  <app-weather-list [lat]="lat" [lng]="lng"></app-weather-list>
+</form>

@@ -10,6 +10,8 @@ import { TimePickerComponent } from './time-picker/time-picker.component'
 import { OverlayModule } from '@angular/cdk/overlay'
 import { MatIconModule } from '@angular/material/icon'
 import { TemplateForTimePickerComponent } from './template-for-time-picker/template-for-time-picker.component'
+import { MatNativeDateModule } from '@angular/material/core'
+import { SpecialSymbolDirective } from './input/special-symbol.directive'
 
 @NgModule({
   declarations: [
@@ -17,6 +19,7 @@ import { TemplateForTimePickerComponent } from './template-for-time-picker/templ
     DatePickerComponent,
     TimePickerComponent,
     TemplateForTimePickerComponent,
+    SpecialSymbolDirective
   ],
   imports: [
     BrowserModule,
@@ -27,6 +30,7 @@ import { TemplateForTimePickerComponent } from './template-for-time-picker/templ
     MatDatepickerModule,
     OverlayModule,
     MatIconModule,
+    MatNativeDateModule,
   ],
   providers: [],
   bootstrap: [],

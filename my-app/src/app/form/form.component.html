@@ -3,33 +3,20 @@
     <h1>Form</h1>
     <form [formGroup]="form" (ngSubmit)="formSubmit()" novalidate>
       <div>
-        <app-input
-          label="First name"
-          controlName="firstName"
-          [formController]="getFirstName()"
-          [errors]="errorsForFirstName()"
-        ></app-input>
+        <app-input label="First name" controlName="firstName"></app-input>
       </div>
       <div>
-        <app-input
-          label="Last name"
-          controlName="lastName"
-          [formController]="getLastName()"
-          [errors]="errorsForLastName()"
-        ></app-input>
+        <app-input label="Last name" controlName="lastName"></app-input>
       </div>
       <div>
         <app-time-picker
           label="Choose the time"
           controlName="time"
-          [formGroup]="form"
         ></app-time-picker>
       </div>
       <div>
         <app-date-picker
           controlName="dateOfBirth"
-          [errors]="errorsForDateOfBirth()"
-          [formController]="getDateOfBirth()"
           label="Choose the date of birth"
         ></app-date-picker>
       </div>

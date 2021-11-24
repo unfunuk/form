@@ -4,7 +4,7 @@
   #originOverlay="cdkOverlayOrigin"
 >
   <mat-label>{{ label }}</mat-label>
-  <input matInput [formControlName]="controlName" type="text" />
+  <input matInput formControlName="time" type="text" />
   <mat-icon
     matSuffix
     (click)="iconClick($event)"
