@@ -1,17 +1,11 @@
-import { Component, Input, OnInit } from '@angular/core'
-import {
-  AbstractControl,
-  ControlContainer,
-  FormControl,
-  FormGroup,
-  FormGroupDirective,
-  ValidatorFn,
-  Validators,
-} from '@angular/forms'
+import { Component, Input, OnInit } from '@angular/core';
+import { ControlContainer, FormGroupDirective } from '@angular/forms';
+import { FormControllerService } from '../../services/form-controller.service';
+import { Control } from '../form.component';
 
 export interface InputErrors {
-  required: string
-  wrongFormat: string
+  required: string;
+  wrongFormat: string;
 }
 @Component({
   selector: 'app-input',
@@ -22,19 +16,20 @@ export interface InputErrors {
   ],
 })
 export class InputComponent implements OnInit {
-  @Input() controlName: string = ''
-  @Input() label: string = ''
-  myForm: FormGroup
+  @Input() control: Control;
   inputErrors: InputErrors = {
     required: 'Required field',
     wrongFormat: 'Wrong format',
-  }
-  constructor(private parent: FormGroupDirective) {}
+  };
+  constructor(
+    public parent: FormGroupDirective,
+    private formController: FormControllerService
+  ) {}
   ngOnInit() {
-    this.myForm = this.parent.form
-    this.parent.form.addControl(
-      this.controlName,
-      new FormControl('', [Validators.required])
-    )
+    this.formController.addFormControl(
+      this.control.controlName,
+      this.parent,
+      this.control.defaultValue
+    );
   }
 }

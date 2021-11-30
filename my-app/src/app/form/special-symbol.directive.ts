@@ -1,10 +1,12 @@
-import { Directive } from '@angular/core'
+import { Directive, Input } from '@angular/core';
 import {
   AbstractControl,
+  ControlValueAccessor,
+  FormGroupDirective,
   NG_VALIDATORS,
   ValidationErrors,
   Validator,
-} from '@angular/forms'
+} from '@angular/forms';
 
 @Directive({
   selector: '[specialSymbol]',
@@ -18,8 +20,8 @@ import {
 })
 export class SpecialSymbolDirective implements Validator {
   validate(control: AbstractControl): ValidationErrors | null {
-    const accountRgEx: RegExp = /^[а-яА-Яa-zA-Z]+$/
-    let valid = !control.value || accountRgEx.test(control.value)
-    return valid ? null : { wrongFormat: true }
+    const accountRgEx: RegExp = /^[а-яА-Яa-zA-Z]+$/;
+    let valid = !control.value || accountRgEx.test(control.value);
+    return valid ? null : { wrongFormat: true };
   }
 }

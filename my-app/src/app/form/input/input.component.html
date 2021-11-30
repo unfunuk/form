@@ -1,8 +1,13 @@
 <mat-form-field appearance="fill">
-  <mat-label>{{ label }}</mat-label>
-  <input matInput [formControlName]="controlName" type="text" specialSymbol/>
+  <mat-label>{{ control.label }}</mat-label>
+  <input
+    matInput
+    [formControlName]="control.controlName"
+    type="text"
+    specialSymbol
+  />
   <mat-error *ngFor="let error of inputErrors | keyvalue">
-    <p *ngIf="myForm.get(controlName)?.hasError(error.key)">
+    <p *ngIf="parent.form.get(control.controlName)?.hasError(error.key)">
       {{ error.value }}
     </p>
   </mat-error>

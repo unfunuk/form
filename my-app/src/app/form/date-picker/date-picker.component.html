@@ -1,13 +1,13 @@
 <mat-form-field appearance="fill">
-  <mat-label>{{ label }}</mat-label>
+  <mat-label>{{ control.label }}</mat-label>
   <input
     matInput
-    [formControlName]="controlName"
+    [formControlName]="control.controlName"
     [matDatepicker]="picker"
     [max]="maxDob"
   />
   <mat-error *ngFor="let error of dateErrors | keyvalue">
-    <p *ngIf="myForm.get(controlName)?.hasError(error.key)">
+    <p *ngIf="parent.form.get(control.controlName)?.hasError(error.key)">
       {{ error.value }}
     </p>
   </mat-error>

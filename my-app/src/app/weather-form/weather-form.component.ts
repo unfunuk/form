@@ -1,6 +1,6 @@
-import { Component } from '@angular/core'
-import { MouseEvent } from '@agm/core'
-import { FormBuilder, FormGroup } from '@angular/forms'
+import { Component } from '@angular/core';
+import { MouseEvent } from '@agm/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-weather-form',
@@ -8,18 +8,19 @@ import { FormBuilder, FormGroup } from '@angular/forms'
   styleUrls: ['./weather-form.component.scss'],
 })
 export class WeatherFormComponent {
-  lat: number | undefined
-  lng: number | undefined
-  formGroup: FormGroup
+  lat: number = 53.882974;
+  lng: number = 27.547119;
+  formGroup: FormGroup;
   constructor(private formBuilder: FormBuilder) {
-    this.formGroup = this.formBuilder.group({})
+    this.formGroup = this.formBuilder.group({});
   }
   mapClick(event: MouseEvent) {
-    this.lat = event.coords.lat
-    this.lng = event.coords.lng
+    this.lat = event.coords.lat;
+    this.lng = event.coords.lng;
   }
-  async search(geometry: any) {
-    this.lat = geometry.lat
-    this.lng = geometry.lng
+  handleAddressChange(location: any) {
+    console.log(location.lat());
+    this.lat = location.lat();
+    this.lng = location.lng();
   }
 }

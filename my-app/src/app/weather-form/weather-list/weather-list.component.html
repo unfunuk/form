@@ -1,4 +1,4 @@
-<div *ngIf="weatherInfo !== undefined" class='weather'>
+<div *ngIf="weatherInfo" class="weather">
   <p>Name:{{ weatherInfo.name }}</p>
   <p>Weather:{{ weatherInfo.weather[0].description }}</p>
   <p>Speed of wind:{{ weatherInfo.wind.speed }}</p>

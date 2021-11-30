@@ -6,3 +6,42 @@ mat-form-field.mat-form-field {
 .mat-icon:hover {
   cursor: pointer;
 }
+.time-element.active-item {
+  background: darkgray;
+}
+.template {
+  width: 296px;
+  position: relative;
+  box-shadow: 0px 2px 4px -1px rgb(0 0 0 / 20%),
+    0px 4px 5px 0px rgb(0 0 0 / 14%), 0px 1px 10px 0px rgb(0 0 0 / 12%);
+  background-color: #fff;
+  box-sizing: border-box;
+  .label {
+    padding-left: 25px;
+    padding-top: 10px;
+  }
+  .time-list {
+    padding: 10px 25px;
+    position: relative;
+    box-sizing: border-box;
+    margin: 0px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    list-style: none;
+    grid-gap: 10px;
+    .time-element {
+      color: black;
+      font-size: 16px;
+      text-align: center;
+      border-radius: 20px;
+      height: 25px;
+      padding-top: 5px;
+
+      &:hover {
+        cursor: pointer;
+        background: darkgray;
+      }
+    }
+  }
+}
