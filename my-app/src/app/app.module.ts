@@ -14,34 +14,23 @@ import { WeatherFormModule } from './weather-form/weather-form.module';
 import { AgmCoreModule } from '@agm/core';
 import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
 import { HomeComponent } from './home/home.component';
-import { RouterModule, Routes } from '@angular/router'
-import { NotFoundComponent } from './not-found/not-found.component'
-import { MatTabsModule } from '@angular/material/tabs'
+import { NotFoundComponent } from './not-found/not-found.component';
+import { MatTabsModule } from '@angular/material/tabs';
 
-const appRoutes: Routes =[
-  { path: '', component: HomeComponent},
-  { path: 'form', component: FormComponent},
-  { path: 'weather-form', component: WeatherFormComponent},
-  { path: '**', component: NotFoundComponent }
-];
 @NgModule({
-  declarations: [AppComponent, FormComponent, WeatherFormComponent, HomeComponent, NotFoundComponent],
+  declarations: [AppComponent, HomeComponent, NotFoundComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormModule,
     BrowserAnimationsModule,
-    ReactiveFormsModule,
-    MatCardModule,
-    MatButtonModule,
     WeatherFormModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyDqHQgfsx8vG0UINAUMtewU8cVlo-0A49c',
-      libraries: ['places']
+      libraries: ['places'],
     }),
-    RouterModule.forRoot(appRoutes),
     GooglePlaceModule,
-    MatTabsModule
+    MatTabsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

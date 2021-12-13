@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
 import { InputComponent } from './input/input.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -10,7 +9,12 @@ import { TimePickerComponent } from './time-picker/time-picker.component';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { MatIconModule } from '@angular/material/icon';
 import { MatNativeDateModule } from '@angular/material/core';
-import { SpecialSymbolDirective } from './special-symbol.directive'
+import { SpecialSymbolDirective } from './special-symbol.directive';
+import { CommonModule } from '@angular/common';
+import { FormComponent } from './form.component';
+import { RouterModule } from '@angular/router';
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [
@@ -18,9 +22,10 @@ import { SpecialSymbolDirective } from './special-symbol.directive'
     DatePickerComponent,
     TimePickerComponent,
     SpecialSymbolDirective,
+    FormComponent,
   ],
   imports: [
-    BrowserModule,
+    CommonModule,
     MatFormFieldModule,
     MatInputModule,
     ReactiveFormsModule,
@@ -29,14 +34,11 @@ import { SpecialSymbolDirective } from './special-symbol.directive'
     OverlayModule,
     MatIconModule,
     MatNativeDateModule,
+    RouterModule.forChild([{ path: 'form', component: FormComponent }]),
+    MatCardModule,
+    MatButtonModule,
   ],
   providers: [],
-  bootstrap: [],
-  exports: [
-    InputComponent,
-    DatePickerComponent,
-    TimePickerComponent,
-    SpecialSymbolDirective,
-  ],
+  exports: [RouterModule],
 })
 export class FormModule {}
