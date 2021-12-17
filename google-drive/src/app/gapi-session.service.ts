@@ -1,23 +1,29 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 const CLIENT_ID =
   '1068480686064-r8ri5cc9mc9jqs83s5u9d2c6plk6tdt2.apps.googleusercontent.com';
-const API_KEY = 'AIzaSyBEyfKlzW0qK9N4TMyRwJMq3OdGF8RGPi8';
+const API_KEY = 'AIzaSyALKrGtW8xoM4fh2goItStszHCc8PZqRXA';
 const DISCOVERY_DOCS = [
   'https://www.googleapis.com/discovery/v1/apis/drive/v3/rest',
 ];
 const SCOPES = 'https://www.googleapis.com/auth/drive';
+
 declare var gapi: any;
+
 @Injectable({
   providedIn: 'root',
 })
 export class GapiSessionService {
   googleAuth: any;
+  token!: string;
+  isSignedIn$ = new BehaviorSubject(false);
+
   constructor() {}
 
   initClient() {
     return new Promise<void>((resolve, reject) => {
-      gapi.load('client:auth2', () => {
-        return gapi.client
+      gapi.load('auth2', () => {
+        gapi.auth2
           .init({
             apiKey: API_KEY,
             clientId: CLIENT_ID,
@@ -26,26 +32,39 @@ export class GapiSessionService {
           })
           .then(() => {
             this.googleAuth = gapi.auth2.getAuthInstance();
+            this.signOut();
+            this.googleAuth.isSignedIn.listen(
+              this.updateSignInStatus.bind(this)
+            );
             resolve();
           });
       });
     });
   }
-  get isSignedIn(): boolean {
-    return this.googleAuth.isSignedIn.get();
-  }
 
   signIn() {
-    return this.googleAuth
-      .signIn({
-        prompt: 'select_account',
-      })
-      .then((googleUser: any) => {
-        console.log(googleUser);
-      });
+    return this.googleAuth.signIn().then((googleUser: any) => {
+      console.log(googleUser);
+      this.token = googleUser.vc.access_token;
+    });
   }
 
   signOut(): void {
     this.googleAuth.signOut();
+    this.token = '';
+  }
+
+  updateSignInStatus() {
+    let user = this.googleAuth.currentUser.get();
+    let isAuthorized = user.hasGrantedScopes(SCOPES);
+    if (isAuthorized) {
+      this.isSignedIn$.next(true);
+      console.log(
+        'You are currently signed in and have granted access to this app.'
+      );
+    } else {
+      this.isSignedIn$.next(false);
+      console.log('You have not authorized this app or you are signed out.');
+    }
   }
 }

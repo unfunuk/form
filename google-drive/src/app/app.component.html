@@ -1,2 +1,14 @@
-<button (click)="gapiSession.signIn()">Sign in</button>
-<button (click)="filesService.getFiles('root')">get files</button>
+<header class="header">
+  <button mat-flat-button color="primary" (click)="gapiSession.signIn()">
+    Sign In
+  </button>
+  <button
+    mat-flat-button
+    color="primary"
+    (click)="gapiSession.signOut()"
+    [disabled]="!isSignedIn"
+  >
+    Sign Out
+  </button>
+</header>
+<app-files-list></app-files-list>

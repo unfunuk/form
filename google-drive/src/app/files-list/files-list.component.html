@@ -1,0 +1,69 @@
+<div class="files-list">
+  <button
+    [disabled]="!isSignedIn"
+    mat-raised-button
+    color="primary"
+    (click)="refresh()"
+  >
+    Get table
+  </button>
+  <div *ngIf="!isLoading; else loadingBlock">
+    <div *ngIf="dataSource.data.length > 0; else noDataBlock">
+      <mat-form-field appearance="standard">
+        <mat-label>Filter</mat-label>
+        <input matInput (keyup)="applyFilter($event)" #input />
+      </mat-form-field>
+      <table
+        mat-table
+        [dataSource]="dataSource"
+        matSort
+        (matSortChange)="announceSortChange($event)"
+      >
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+          <td mat-cell *matCellDef="let name">{{ name.name }}</td>
+        </ng-container>
+        <ng-container matColumnDef="projectName">
+          <th mat-header-cell *matHeaderCellDef>Project name</th>
+          <td mat-cell *matCellDef="let element">{{ element.projectName }}</td>
+        </ng-container>
+        <ng-container matColumnDef="assigmentName">
+          <th mat-header-cell *matHeaderCellDef>Assigment name</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.assigmentName }}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="workDate">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Work date</th>
+          <td mat-cell *matCellDef="let element">{{ element.workDate }}</td>
+        </ng-container>
+        <ng-container matColumnDef="billedHours">
+          <th mat-header-cell *matHeaderCellDef>Billed hours</th>
+          <td mat-cell *matCellDef="let element">{{ element.billedHours }}</td>
+        </ng-container>
+        <ng-container matColumnDef="taskKey">
+          <th mat-header-cell *matHeaderCellDef>Task key</th>
+          <td mat-cell *matCellDef="let element">{{ element.taskKey }}</td>
+        </ng-container>
+        <ng-container matColumnDef="taskSummary">
+          <th mat-header-cell *matHeaderCellDef>Task summary</th>
+          <td mat-cell *matCellDef="let element">{{ element.taskSummary }}</td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell" colspan="4">
+            No data matching the filter "{{ input.value }}"
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <ng-template #noDataBlock>
+    <p>No data</p>
+  </ng-template>
+  <ng-template #loadingBlock>
+    <mat-spinner class="template"></mat-spinner>
+  </ng-template>
+</div>
