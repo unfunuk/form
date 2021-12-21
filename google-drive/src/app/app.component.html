@@ -1,14 +1,17 @@
 <header class="header">
-  <button mat-flat-button color="primary" (click)="gapiSession.signIn()">
-    Sign In
-  </button>
-  <button
-    mat-flat-button
-    color="primary"
-    (click)="gapiSession.signOut()"
-    [disabled]="!isSignedIn"
-  >
-    Sign Out
-  </button>
+  <h2>To get the data, you first of all need to log into your Google account</h2>
+  <div class="buttons">
+    <button mat-flat-button color="primary" (click)="gapiSession.signIn()">
+      Sign In
+    </button>
+    <button
+      mat-flat-button
+      color="primary"
+      (click)="gapiSession.signOut()"
+      [disabled]="!isSignedIn"
+    >
+      Sign Out
+    </button>
+  </div>
 </header>
 <app-files-list></app-files-list>

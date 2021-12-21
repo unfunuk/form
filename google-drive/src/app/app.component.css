@@ -1,10 +1,18 @@
-.header{
+.header {
   display: flex;
-  height: 60px;
-  border-bottom: black 4px solid;
-  justify-content: center;
-  padding: 10px 0px;
+  height: 40px;
+  border-bottom: black 2px solid;
+  justify-content: space-between;
+  padding: 10px 50px;
+  text-align: center;
 }
-button{
-  margin:10px;
+.buttons {
+  display: flex;
+  justify-content: flex-end;
+}
+button {
+  margin-right: 40px;
+}
+h2{
+  margin-left: 30%;
 }

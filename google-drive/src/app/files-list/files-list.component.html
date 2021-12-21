@@ -1,24 +1,37 @@
 <div class="files-list">
-  <button
-    [disabled]="!isSignedIn"
-    mat-raised-button
-    color="primary"
-    (click)="refresh()"
-  >
-    Get table
-  </button>
+  <div class="buttons">
+    <button
+      [disabled]="!isSignedIn"
+      mat-raised-button
+      color="primary"
+      (click)="refresh()"
+    >
+      Get table
+    </button>
+    <button
+      [disabled]="!isSignedIn"
+      mat-raised-button
+      color="primary"
+      (click)="exportJSONData()"
+    >
+      Download JSON
+    </button>
+    <button
+      [disabled]="!isSignedIn"
+      mat-raised-button
+      color="primary"
+      (click)="exportCSVData()"
+    >
+      Download CSV
+    </button>
+  </div>
   <div *ngIf="!isLoading; else loadingBlock">
     <div *ngIf="dataSource.data.length > 0; else noDataBlock">
       <mat-form-field appearance="standard">
         <mat-label>Filter</mat-label>
         <input matInput (keyup)="applyFilter($event)" #input />
       </mat-form-field>
-      <table
-        mat-table
-        [dataSource]="dataSource"
-        matSort
-        (matSortChange)="announceSortChange($event)"
-      >
+      <table mat-table [dataSource]="dataSource" matSort>
         <ng-container matColumnDef="name">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
           <td mat-cell *matCellDef="let name">{{ name.name }}</td>
@@ -61,7 +74,7 @@
     </div>
   </div>
   <ng-template #noDataBlock>
-    <p>No data</p>
+    <h3>No data</h3>
   </ng-template>
   <ng-template #loadingBlock>
     <mat-spinner class="template"></mat-spinner>

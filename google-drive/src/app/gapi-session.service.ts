@@ -44,7 +44,6 @@ export class GapiSessionService {
 
   signIn() {
     return this.googleAuth.signIn().then((googleUser: any) => {
-      console.log(googleUser);
       this.token = googleUser.vc.access_token;
     });
   }
@@ -57,14 +56,6 @@ export class GapiSessionService {
   updateSignInStatus() {
     let user = this.googleAuth.currentUser.get();
     let isAuthorized = user.hasGrantedScopes(SCOPES);
-    if (isAuthorized) {
-      this.isSignedIn$.next(true);
-      console.log(
-        'You are currently signed in and have granted access to this app.'
-      );
-    } else {
-      this.isSignedIn$.next(false);
-      console.log('You have not authorized this app or you are signed out.');
-    }
+    isAuthorized ? this.isSignedIn$.next(true) : this.isSignedIn$.next(false);
   }
 }
