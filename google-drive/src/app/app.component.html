@@ -1,14 +1,26 @@
 <header class="header">
-  <h2>To get the data, you first of all need to log into your Google account</h2>
   <div class="buttons">
-    <button mat-flat-button color="primary" (click)="gapiSession.signIn()">
+    <button
+      *ngIf="user !== null"
+      mat-raised-button
+      color="primary"
+      (click)="openDialog()"
+    >
+      Send message
+    </button>
+    <button
+      mat-flat-button
+      color="primary"
+      *ngIf="user === null"
+      (click)="signIn()"
+    >
       Sign In
     </button>
     <button
       mat-flat-button
       color="primary"
-      (click)="gapiSession.signOut()"
-      [disabled]="!isSignedIn"
+      (click)="signOut()"
+      *ngIf="user !== null"
     >
       Sign Out
     </button>

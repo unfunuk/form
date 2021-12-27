@@ -1,5 +1,5 @@
 .files-list {
-  margin: 20px auto;
+  margin: 0px auto;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -8,7 +8,6 @@
 }
 button {
   width: 150px;
-  margin-bottom: 10px;
 }
 table {
   width: 90%;
@@ -30,4 +29,5 @@ table {
   display: flex;
   justify-content: space-around;
   width: 50%;
+  margin-top: 20px;
 }

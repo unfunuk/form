@@ -20,7 +20,13 @@
     "module": "es2020",
     "lib": ["es2020", "dom"],
     "typeRoots": ["node_modules/@types"],
-    "types": ["gapi", "gapi.auth2"]
+    "types": [
+      "gapi",
+      "gapi.auth2",
+      "gapi.client",
+      "gapi.client.drive",
+      "gapi.client.gmail"
+    ]
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

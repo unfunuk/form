@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { forkJoin, Observable, ObservableInput, Subject, tap } from 'rxjs';
+import { forkJoin, Observable } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
-const API_KEY = 'AIzaSyALKrGtW8xoM4fh2goItStszHCc8PZqRXA';
+import { json2csvAsync } from 'json-2-csv';
+const API_KEY = 'AIzaSyCX5SMRSv5Jh9DnvoYeGKP1BMlmeLO0UrQ';
 
 export interface RowData {
   name: string;
@@ -108,5 +109,30 @@ export class FilesService {
             )
         )
       );
+  }
+  exportJSONData(data: RowData[]) {
+    let a = document.createElement('a');
+    let file = new Blob([JSON.stringify(data, null, 2)], {
+      type: 'text/json',
+    });
+    a.href = URL.createObjectURL(file);
+    a.setAttribute('download', 'table.json');
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }
+
+  exportCSVData(data: RowData[]) {
+    json2csvAsync(data).then((csv) => {
+      let a = document.createElement('a');
+      let file = new Blob([csv], {
+        type: 'text/csv',
+      });
+      a.href = URL.createObjectURL(file);
+      a.setAttribute('download', 'table.csv');
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    });
   }
 }

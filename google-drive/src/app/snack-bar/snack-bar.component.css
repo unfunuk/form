@@ -1,0 +1,8 @@
+::ng-deep .snack-error {
+  background: #a03e3e;
+  color: white;
+}
+::ng-deep .snack-success {
+  background: #59ab3f;
+  color: white;
+}

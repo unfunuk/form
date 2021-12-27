@@ -1,30 +1,4 @@
 <div class="files-list">
-  <div class="buttons">
-    <button
-      [disabled]="!isSignedIn"
-      mat-raised-button
-      color="primary"
-      (click)="refresh()"
-    >
-      Get table
-    </button>
-    <button
-      [disabled]="!isSignedIn"
-      mat-raised-button
-      color="primary"
-      (click)="exportJSONData()"
-    >
-      Download JSON
-    </button>
-    <button
-      [disabled]="!isSignedIn"
-      mat-raised-button
-      color="primary"
-      (click)="exportCSVData()"
-    >
-      Download CSV
-    </button>
-  </div>
   <div *ngIf="!isLoading; else loadingBlock">
     <div *ngIf="dataSource.data.length > 0; else noDataBlock">
       <mat-form-field appearance="standard">
@@ -73,8 +47,28 @@
       </table>
     </div>
   </div>
+  <div class="buttons">
+    <button
+      *ngIf="user !== null && dataSource.data.length !== 0"
+      mat-raised-button
+      color="primary"
+      (click)="exportJSONData()"
+    >
+      Download JSON
+    </button>
+    <button
+      *ngIf="user !== null && dataSource.data.length !== 0"
+      mat-raised-button
+      color="primary"
+      (click)="exportCSVData()"
+    >
+      Download CSV
+    </button>
+  </div>
   <ng-template #noDataBlock>
-    <h3>No data</h3>
+    <h2>
+      To get the data, you first of all need to log into your Google account
+    </h2>
   </ng-template>
   <ng-template #loadingBlock>
     <mat-spinner class="template"></mat-spinner>

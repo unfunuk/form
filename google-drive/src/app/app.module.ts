@@ -1,8 +1,6 @@
-import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
-import { GapiSessionService } from './gapi-session.service';
 import { HttpClientModule } from '@angular/common/http';
 import { FilesListComponent } from './files-list/files-list.component';
 import { MatButtonModule } from '@angular/material/button';
@@ -13,12 +11,21 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { DialogOverviewMessageComponent } from './dialog-overview-message/dialog-overview-message.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { NgModule } from '@angular/core';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { SnackBarComponent } from './snack-bar/snack-bar.component';
+import { DialogOverviewSignInComponent } from './dialog-overview-sign-in/dialog-overview-sign-in.component';
 
-export function initGapi(gapiSession: GapiSessionService) {
-  return () => gapiSession.initClient();
-}
 @NgModule({
-  declarations: [AppComponent, FilesListComponent],
+  declarations: [
+    AppComponent,
+    FilesListComponent,
+    DialogOverviewMessageComponent,
+    SnackBarComponent,
+    DialogOverviewSignInComponent,
+  ],
   imports: [
     BrowserModule,
     HttpClientModule,
@@ -31,15 +38,10 @@ export function initGapi(gapiSession: GapiSessionService) {
     MatFormFieldModule,
     MatInputModule,
     MatProgressSpinnerModule,
+    MatDialogModule,
+    MatSnackBarModule,
   ],
-  providers: [
-    {
-      provide: APP_INITIALIZER,
-      useFactory: initGapi,
-      deps: [GapiSessionService],
-      multi: true,
-    },
-  ],
+
   bootstrap: [AppComponent],
 })
 export class AppModule {}

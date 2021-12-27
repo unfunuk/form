@@ -5,11 +5,11 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { json2csvAsync } from 'json-2-csv';
-import { GapiSessionService } from '../gapi-session.service';
-import { FilesService, RowData, SheetData } from '../files.service';
+
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
+import { GapiService } from '../services/gapi.service';
+import { FilesService, RowData, SheetData } from '../services/files.service';
 
 @Component({
   selector: 'app-files-list',
@@ -19,7 +19,7 @@ import { MatSort } from '@angular/material/sort';
 })
 export class FilesListComponent implements OnInit {
   constructor(
-    public gapiSession: GapiSessionService,
+    public gapiService: GapiService,
     public filesService: FilesService,
     private ref: ChangeDetectorRef
   ) {}
@@ -32,59 +32,42 @@ export class FilesListComponent implements OnInit {
     'taskKey',
     'taskSummary',
   ];
+  user: any;
   dataSource = new MatTableDataSource<RowData>();
-  isSignedIn = false;
   isLoading = false;
   @ViewChild(MatSort) set matSort(sort: MatSort) {
     this.dataSource.sort = sort;
   }
   ngOnInit() {
-    this.gapiSession.isSignedIn$.subscribe((value) => {
-      this.isSignedIn = value;
-      if (!this.isSignedIn) {
+    this.gapiService.subject$.subscribe((user: any) => {
+      this.user = user;
+      if (user !== null) {
+        this.refresh(gapi.client.getToken().access_token);
+      } else {
         this.dataSource.data = [];
       }
       this.ref.detectChanges();
     });
   }
-  refresh() {
+  refresh(token: string) {
     this.isLoading = true;
-    this.filesService
-      .getUserFile(this.gapiSession.token)
-      .subscribe((result: SheetData[]) => {
-        const data: RowData[] = this.filesService.modifyData(result);
-        this.dataSource.data = data;
-        this.isLoading = false;
-        this.ref.detectChanges();
-      });
+    this.filesService.getUserFile(token).subscribe((result: SheetData[]) => {
+      const data: RowData[] = this.filesService.modifyData(result);
+      this.dataSource.data = data;
+      this.isLoading = false;
+      this.ref.detectChanges();
+    });
   }
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+    this.ref.detectChanges();
   }
   exportJSONData() {
-    let a = document.createElement('a');
-    let file = new Blob([JSON.stringify(this.dataSource.data, null, 2)], {
-      type: 'text/json',
-    });
-    a.href = URL.createObjectURL(file);
-    a.setAttribute('download', 'table.json');
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
+    this.filesService.exportJSONData(this.dataSource.data);
   }
 
   exportCSVData() {
-    json2csvAsync(this.dataSource.data).then((csv) => {
-      let a = document.createElement('a');
-      let file = new Blob([csv], {
-        type: 'text/csv',
-      });
-      a.href = URL.createObjectURL(file);
-      a.setAttribute('download', 'table.csv');
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-    });
+    this.filesService.exportCSVData(this.dataSource.data);
   }
 }
