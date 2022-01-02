@@ -19,10 +19,15 @@ export interface SheetData {
   majorDimension: string;
   values: [[string]];
 }
+export interface EmployeesEmails {
+  name: string;
+  email: string;
+}
 @Injectable({
   providedIn: 'root',
 })
 export class FilesService {
+  employeesEmails: EmployeesEmails[] = [];
   constructor(private http: HttpClient) {}
 
   static setDate(dateStr: string) {
@@ -33,7 +38,13 @@ export class FilesService {
   modifyData(data: SheetData[]): RowData[] {
     let rows: Array<RowData> = new Array<RowData>();
     data.forEach((sheet: any) => {
-      if (sheet.values.length !== 0) {
+      if (sheet.range.split('!')[0] === 'emails') {
+        sheet.values.map((value: any, index: number) => {
+          if (index !== 0) {
+            this.employeesEmails.push({ name: value[0], email: value[1] });
+          }
+        });
+      } else if (sheet.values.length !== 0) {
         let maxDate = FilesService.setDate(sheet.values[1][3]);
         let lastNote = sheet.values[1];
         sheet.values.forEach((row: any, rowIndex: number) => {
@@ -79,7 +90,7 @@ export class FilesService {
       .pipe(
         map((result: any) => {
           let file = result.body.files.filter(
-            (doc: any) => doc.name === 'test_data_reporting'
+            (doc: any) => doc.name === 'aa'
           )[0];
           return file;
         }),

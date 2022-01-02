@@ -6,9 +6,15 @@ import { Base64 } from 'js-base64';
 })
 export class GmailService {
   constructor(private http: HttpClient) {}
-  sendMessage(message: string, subject: string, token: string, from: string) {
+  sendMessage(
+    message: string,
+    subject: string,
+    token: string,
+    from: string,
+    to: string
+  ) {
     const raw = [
-      `to: unfunuk@gmail.com`,
+      `to: ${to}`,
       '\n',
       `from: ${from}`,
       '\n',

@@ -1,7 +1,7 @@
 <header class="header">
   <div class="buttons">
     <button
-      *ngIf="user !== null"
+      *ngIf="user !== null && gapiService.isAdmin"
       mat-raised-button
       color="primary"
       (click)="openDialog()"

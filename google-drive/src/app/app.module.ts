@@ -17,6 +17,7 @@ import { NgModule } from '@angular/core';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { SnackBarComponent } from './snack-bar/snack-bar.component';
 import { DialogOverviewSignInComponent } from './dialog-overview-sign-in/dialog-overview-sign-in.component';
+import { MatSelectModule } from "@angular/material/select";
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { DialogOverviewSignInComponent } from './dialog-overview-sign-in/dialog-
     MatProgressSpinnerModule,
     MatDialogModule,
     MatSnackBarModule,
+    MatSelectModule
   ],
 
   bootstrap: [AppComponent],

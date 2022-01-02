@@ -1,21 +1,34 @@
 <h2 mat-dialog-title>Send message dialog overview</h2>
 <mat-dialog-content>
-  <p>Send to: {{ data.user }}</p>
-  <mat-form-field appearance="fill">
-    <mat-label>Subject:</mat-label>
-    <textarea matInput [(ngModel)]="subject"></textarea>
-  </mat-form-field>
-  <mat-form-field appearance="fill">
-    <mat-label>Your message:</mat-label>
-    <textarea matInput [(ngModel)]="message"></textarea>
-  </mat-form-field>
+  <form [formGroup]="form" novalidate>
+    <h4>Send to:</h4>
+    <mat-form-field appearance="fill">
+      <mat-label>Employee</mat-label>
+      <mat-select formControlName="email">
+        <mat-option
+          *ngFor="let empl of filesService.employeesEmails"
+          [value]="empl.email"
+        >
+          {{ empl.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Subject:</mat-label>
+      <textarea matInput formControlName="subject"></textarea>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Your message:</mat-label>
+      <textarea matInput formControlName="message"></textarea>
+    </mat-form-field>
+  </form>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
   <button mat-button (click)="onNoClick()">Cancel</button>
   <button
     mat-button
-    [disabled]="message.trim().length === 0 || subject.trim().length === 0"
-    [mat-dialog-close]="{message,subject}"
+    [disabled]="!this.form.valid"
+    [mat-dialog-close]="this.form.value"
   >
     Send
   </button>

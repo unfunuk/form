@@ -9,8 +9,13 @@ import { MatDialog } from '@angular/material/dialog';
 import { DialogOverviewMessageComponent } from './dialog-overview-message/dialog-overview-message.component';
 import { GapiService } from './services/gapi.service';
 import { GmailService } from './services/gmail.service';
-import { NotificationService } from "./services/notification.service";
+import { NotificationService } from './services/notification.service';
 
+interface MessageInfo {
+  email: string;
+  message: string;
+  subject: string;
+}
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -25,7 +30,7 @@ export class AppComponent implements OnInit {
     public dialog: MatDialog,
     public messageService: GmailService,
     private readonly zone: NgZone,
-    private notification: NotificationService,
+    private notification: NotificationService
   ) {}
 
   ngOnInit(): void {
@@ -44,24 +49,24 @@ export class AppComponent implements OnInit {
     this.zone.run(() => {
       const dialogRef = this.dialog.open(DialogOverviewMessageComponent, {
         width: '400px',
-        data: { user: 'unfunuk@gmail.com' },
       });
-      dialogRef
-        .afterClosed()
-        .subscribe((info: { message: string; subject: string }) => {
-          if (info !== undefined) {
-            this.messageService
-              .sendMessage(
-                info.message,
-                info.subject,
-                this.user.vc.access_token,
-                this.user.yu.nv
-              )
-              .subscribe(() => {
-                this.notification.openSuccessSnackBar('Success. Message has been sent');
-              });
-          }
-        });
+      dialogRef.afterClosed().subscribe((info: MessageInfo) => {
+        if (info !== undefined) {
+          this.messageService
+            .sendMessage(
+              info.message,
+              info.subject,
+              this.user.vc.access_token,
+              this.user.yu.nv,
+              info.email
+            )
+            .subscribe(() => {
+              this.notification.openSuccessSnackBar(
+                'Success. Message has been sent'
+              );
+            });
+        }
+      });
     });
   }
 }
